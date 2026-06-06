@@ -1,0 +1,6 @@
+---
+- name: Verify k3s cluster
+  hosts: localhost
+  connection: local
+  roles:
+    - kube_verify

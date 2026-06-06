@@ -1,0 +1,9 @@
+# Python virtual environments
+ansible-env/
+.venv/
+venv/
+env/
+ENV/
+
+# Local OMX runtime state and logs
+.omx/

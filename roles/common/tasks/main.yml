@@ -1,0 +1,88 @@
+---
+- name: Show host info
+  debug:
+    msg:
+      - "inventory_hostname={{ inventory_hostname }}"
+      - "ansible_host={{ ansible_host }}"
+      - "ansible_user={{ ansible_user | default('unknown') }}"
+
+- name: Check OS release
+  command: cat /etc/os-release
+  register: os_release
+  changed_when: false
+
+- name: Print OS release
+  debug:
+    var: os_release.stdout_lines
+
+- name: Install basic packages
+  package:
+    name:
+      - curl
+      - tar
+      - iptables
+      - ca-certificates
+    state: present
+
+- name: Ensure br_netfilter module is loaded
+  modprobe:
+    name: br_netfilter
+    state: present
+  ignore_errors: yes
+
+- name: Ensure overlay module is loaded
+  modprobe:
+    name: overlay
+    state: present
+  ignore_errors: yes
+
+- name: Configure basic sysctl for Kubernetes networking
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop:
+    - { name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+    - { name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+    - { name: "net.ipv4.ip_forward", value: "1" }
+  ignore_errors: yes
+
+- name: Check memory
+  command: free -h
+  register: memory_info
+  changed_when: false
+
+- name: Print memory
+  debug:
+    var: memory_info.stdout_lines
+
+- name: Check disk
+  command: df -h /
+  register: disk_info
+  changed_when: false
+
+- name: Print disk
+  debug:
+    var: disk_info.stdout_lines
+
+- name: Ensure k3s config directory exists
+  file:
+    path: /etc/rancher/k3s
+    state: directory
+    mode: "0755"
+
+- name: Configure containerd registry mirrors for k3s
+  copy:
+    dest: /etc/rancher/k3s/registries.yaml
+    mode: "0644"
+    content: |
+      mirrors:
+        docker.io:
+          endpoint:
+            - "https://docker.1ms.run"
+            - "https://registry-1.docker.io"
+        "registry-1.docker.io":
+          endpoint:
+            - "https://docker.1ms.run"
+            - "https://registry-1.docker.io"

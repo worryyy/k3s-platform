@@ -1,0 +1,37 @@
+---
+- name: Install k3s server
+  hosts: k3s_server
+  become: yes
+  vars_files:
+    - ../inventory/group_vars/all.yml
+  pre_tasks:
+    - name: Debug k3s server variables
+      debug:
+        msg:
+          - "k3s_version={{ k3s_version }}"
+          - "k3s_install_script_url={{ k3s_install_script_url }}"
+          - "k3s_server_ip={{ k3s_server_ip }}"
+          - "current_node={{ inventory_hostname }}"
+          - "current_node_ip={{ ansible_host }}"
+
+  roles:
+    - k3s_server
+
+
+- name: Install k3s agents
+  hosts: k3s_agents
+  become: yes
+  vars_files:
+    - ../inventory/group_vars/all.yml
+  pre_tasks:
+    - name: Debug k3s agent variables
+      debug:
+        msg:
+          - "k3s_version={{ k3s_version }}"
+          - "k3s_install_script_url={{ k3s_install_script_url }}"
+          - "k3s_server_ip={{ k3s_server_ip }}"
+          - "current_node={{ inventory_hostname }}"
+          - "current_node_ip={{ ansible_host }}"
+
+  roles:
+    - k3s_agent

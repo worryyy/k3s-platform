@@ -1,0 +1,57 @@
+---
+- name: Resolve k3s server host
+  set_fact:
+    kubeconfig_server_host: "{{ groups['k3s_server'][0] }}"
+
+- name: Resolve k3s server IP
+  set_fact:
+    kubeconfig_server_ip: "{{ hostvars[kubeconfig_server_host]['ansible_host'] }}"
+
+- name: Debug kubeconfig target
+  debug:
+    msg:
+      - "kubeconfig_server_host={{ kubeconfig_server_host }}"
+      - "kubeconfig_server_ip={{ kubeconfig_server_ip }}"
+
+- name: Read kubeconfig by sudo cat on k3s server
+  command: cat /etc/rancher/k3s/k3s.yaml
+  register: remote_kubeconfig_cat
+  delegate_to: "{{ kubeconfig_server_host }}"
+  become: yes
+  changed_when: false
+
+- name: Render kubeconfig content for local kubectl
+  set_fact:
+    local_kubeconfig_content: >-
+      {{ remote_kubeconfig_cat.stdout
+         | replace('127.0.0.1', kubeconfig_server_ip)
+         | replace('localhost', kubeconfig_server_ip) }}
+
+- name: Create local kube config directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.kube"
+    state: directory
+    mode: "0700"
+
+- name: Backup existing local kubeconfig if present
+  shell: |
+    if [ -f "{{ lookup('env', 'HOME') }}/.kube/config" ]; then
+      cp "{{ lookup('env', 'HOME') }}/.kube/config" "{{ lookup('env', 'HOME') }}/.kube/config.bak.$(date +%Y%m%d%H%M%S)"
+    fi
+  changed_when: false
+
+- name: Write local kubeconfig
+  copy:
+    dest: "{{ kubeconfig_local_path | default(lookup('env', 'HOME') + '/.kube/config') }}"
+    content: "{{ local_kubeconfig_content }}"
+    mode: "0600"
+
+- name: Show current kubeconfig server
+  shell: |
+    grep -n "server:" "{{ kubeconfig_local_path | default(lookup('env', 'HOME') + '/.kube/config') }}"
+  register: kubeconfig_server_line
+  changed_when: false
+
+- name: Print kubeconfig server
+  debug:
+    var: kubeconfig_server_line.stdout_lines

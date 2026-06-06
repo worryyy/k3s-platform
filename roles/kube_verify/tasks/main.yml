@@ -1,0 +1,45 @@
+---
+- name: Check kubectl client
+  command: kubectl version --client
+  register: kubectl_client
+  changed_when: false
+
+- name: Print kubectl client
+  debug:
+    var: kubectl_client.stdout_lines
+
+- name: Get nodes
+  command: kubectl get nodes -o wide
+  register: nodes_output
+  changed_when: false
+
+- name: Print nodes
+  debug:
+    var: nodes_output.stdout_lines
+
+- name: Wait until all nodes are Ready
+  shell: |
+    kubectl get nodes --no-headers | awk '$2!="Ready"{print $1}'
+  register: not_ready_nodes
+  until: not_ready_nodes.stdout == ""
+  retries: 30
+  delay: 10
+  changed_when: false
+
+- name: Get all pods
+  command: kubectl get pods -A -o wide
+  register: pods_output
+  changed_when: false
+
+- name: Print pods
+  debug:
+    var: pods_output.stdout_lines
+
+- name: Check cluster-info
+  command: kubectl cluster-info
+  register: cluster_info
+  changed_when: false
+
+- name: Print cluster-info
+  debug:
+    var: cluster_info.stdout_lines

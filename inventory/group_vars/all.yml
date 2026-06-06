@@ -1,0 +1,15 @@
+---
+k3s_version: "v1.28.8+k3s1"
+
+k3s_install_script_url: "https://rancher-mirror.rancher.cn/k3s/k3s-install.sh"
+k3s_mirror: "cn"
+
+k3s_server_host: "{{ groups['k3s_server'][0] }}"
+k3s_server_ip: "{{ hostvars[k3s_server_host]['ansible_host'] }}"
+
+k3s_flannel_iface: "tailscale0"
+
+disable_traefik: true
+
+kubeconfig_local_path: "{{ lookup('env', 'HOME') }}/.kube/config"
+kubeconfig_tmp_path: "/tmp/k3s.yaml"
