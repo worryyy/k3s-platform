@@ -1,0 +1,34 @@
+# Bitnami MongoDB values for forum-api.
+#
+# Install example:
+# helm upgrade --install mongodb oci://registry-1.docker.io/bitnamicharts/mongodb \
+#   --namespace app --create-namespace \
+#   -f helm-values/dependencies/mongodb.yaml
+#
+# The mongodb-auth Secret is read by the MongoDB chart, not by forum-api.
+# Required keys for the current standalone setup:
+# - mongodb-root-password
+# - mongodb-passwords
+#
+# Additional Bitnami auth features may require keys such as:
+# - mongodb-metrics-password
+# - mongodb-replica-set-key
+
+architecture: standalone
+useStatefulSet: true
+
+auth:
+  enabled: true
+  rootUser: root
+  usernames:
+    - forum_user
+  databases:
+    - forum_db
+  existingSecret: mongodb-auth
+
+persistence:
+  enabled: true
+  size: 8Gi
+
+metrics:
+  enabled: false

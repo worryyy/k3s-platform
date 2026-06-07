@@ -32,7 +32,7 @@ k3s-platform/
 │       └── internal/
 │ 
 ├── charts/
-│   └── sre-demo-api/
+│   └── api/
 │       ├── Chart.yaml
 │       ├── values.yaml
 │       └── templates/
@@ -54,14 +54,19 @@ k3s-platform/
 │   └── delivery/
 │       └── argocd.yaml
 │
+├── secrets/
+│    ├── mysql-secret.example.yaml
+│    ├── mongodb-secret.example.yaml
+│    └── .gitignore
+│
 └── scripts/
     ├── build-image.sh
     └── push-image.sh
 
-    apps/
+apps/
   放你的 Go 服务源码和 Dockerfile。
 
-charts/sre-demo-api/
+charts/api/
   放你自己业务服务的 Helm Chart。
 
 helm-values/dependencies/
