@@ -1,11 +1,12 @@
 replicaCount: 1
 
 image:
-  registry: registry.local:5000
-  repository: forum-api
+  registry: ccr.ccs.tencentyun.com
+  repository: k3s-platform/server
   tag: dev
   pullPolicy: IfNotPresent
-  pullSecrets: []
+  pullSecrets:
+    - tcr-secret
 
 nameOverride: ""
 fullnameOverride: ""

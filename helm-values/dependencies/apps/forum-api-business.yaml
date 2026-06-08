@@ -1,0 +1,9 @@
+replicaCount: 1
+
+fullnameOverride: forum-api
+
+nodeSelector:
+  workload-role: business
+
+podLabels:
+  app-role: business

@@ -46,7 +46,7 @@ k3s-platform/
 ├── helm-values/
 │   ├── dependencies/
 │   │   ├── mysql.yaml
-│   │   └── redis.yaml
+│   │   └── mongodb.yaml
 │   ├── observability/
 │   │   ├── prometheus-stack.yaml
 │   │   ├── loki.yaml
@@ -55,8 +55,11 @@ k3s-platform/
 │       └── argocd.yaml
 │
 ├── secrets/
-│    ├── mysql-secret.example.yaml
-│    ├── mongodb-secret.example.yaml
+│    ├── forum-api-secrets.example.yaml
+│    ├── mysql-auth.example.yaml
+│    ├── mongodb-auth.example.yaml
+│    ├── mysql-auth.yaml
+│    ├── mongodb-auth.yaml
 │    └── .gitignore
 │
 └── scripts/

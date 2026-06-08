@@ -11,7 +11,17 @@
 # - mysql-password
 # - mysql-replication-password
 
-architecture: standalone
+global:
+  security:
+    allowInsecureImages: true
+
+architecture: replication
+
+image:
+  registry: docker.io
+  repository: bitnamilegacy/mysql
+  tag: 9.4.0-debian-12-r1
+  pullPolicy: IfNotPresent
 
 auth:
   createDatabase: true
@@ -20,9 +30,21 @@ auth:
   existingSecret: mysql-auth
 
 primary:
+  podAntiAffinityPreset: ""
+  nodeSelector:
+    kubernetes.io/hostname: node1
   persistence:
     enabled: true
-    size: 8Gi
+    size: 2Gi
+
+secondary:
+  replicaCount: 1
+  podAntiAffinityPreset: ""
+  nodeSelector:
+    kubernetes.io/hostname: node2
+  persistence:
+    enabled: true
+    size: 2Gi
 
 metrics:
   enabled: false
