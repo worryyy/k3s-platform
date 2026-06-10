@@ -100,9 +100,11 @@ spec:
 
               echo "Current workspace: $(pwd)"
               ls -la
-              git status
 
               git config --global --add safe.directory "${WORKSPACE}"
+
+              git status
+
               git config user.name "jenkins"
               git config user.email "jenkins@example.com"
 
@@ -121,5 +123,3 @@ spec:
         }
       }
     }
-  }
-}
