@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.22-alpine AS builder
+FROM ccr.ccs.tencentyun.com/k3s-platform/golang:1.22-alpine AS builder
 
 ENV GOPROXY=https://goproxy.cn,direct
 ENV GO111MODULE=on
@@ -13,7 +13,7 @@ RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/forum-api ./cmd/server
 
-FROM gcr.io/distroless/static-debian12:nonroot
+FROM ccr.ccs.tencentyun.com/k3s-platform/distroless-static-debian12:nonroot
 
 WORKDIR /
 
