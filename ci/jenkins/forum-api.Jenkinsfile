@@ -62,19 +62,19 @@ environment {
       }
     }
 
-stage('Test') {
-  steps {
-    container('golang') {
-      sh '''
-        go env -w GOPROXY=https://goproxy.cn,direct
-        go env -w GO111MODULE=on
-        cd apps/api
-        go mod download
-        go test ./...
-      '''
+    stage('Test') {
+      steps {
+        container('golang') {
+          sh '''
+            go env -w GOPROXY=https://goproxy.cn,direct
+            go env -w GO111MODULE=on
+            cd apps/api
+            go mod download
+            go test ./...
+          '''
+        }
+      }
     }
-  }
-}
 
     stage('Build and Push Image') {
       steps {
@@ -95,10 +95,19 @@ stage('Test') {
         container('git') {
           withCredentials([usernamePassword(credentialsId: 'git-https', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
             sh '''
+              cd "${WORKSPACE}"
+
+              echo "Current workspace: $(pwd)"
+              ls -la
+              git status
+
+              git config --global --add safe.directory "${WORKSPACE}"
               git config user.name "jenkins"
               git config user.email "jenkins@example.com"
 
               sed -i -E "s/tag: .*/tag: ${IMAGE_TAG}/" helm-values/workloads/forum-api-business.yaml
+
+              git diff -- helm-values/workloads/forum-api-business.yaml
 
               git add helm-values/workloads/forum-api-business.yaml
               git commit -m "release: forum-api ${IMAGE_TAG}" || exit 0
@@ -110,5 +119,3 @@ stage('Test') {
         }
       }
     }
-  }
-}
