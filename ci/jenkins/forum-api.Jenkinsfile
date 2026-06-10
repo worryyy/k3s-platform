@@ -44,12 +44,12 @@ spec:
     }
   }
 
-environment {
-  IMAGE_REPO = "ccr.ccs.tencentyun.com/k3s-platform/server"
-  GIT_PUSH_REPO = "https://github.com/worryyy/k3s-platform.git"
-  GOPROXY = "https://goproxy.cn,direct"
-  GO111MODULE = "on"
-}
+  environment {
+    IMAGE_REPO = "ccr.ccs.tencentyun.com/k3s-platform/server"
+    GIT_PUSH_REPO = "https://github.com/worryyy/k3s-platform.git"
+    GOPROXY = "https://goproxy.cn,direct"
+    GO111MODULE = "on"
+  }
 
   stages {
     stage('Prepare') {
@@ -68,6 +68,7 @@ environment {
           sh '''
             go env -w GOPROXY=https://goproxy.cn,direct
             go env -w GO111MODULE=on
+
             cd apps/api
             go mod download
             go test ./...
@@ -107,6 +108,7 @@ environment {
 
               sed -i -E "s/tag: .*/tag: ${IMAGE_TAG}/" helm-values/workloads/forum-api-business.yaml
 
+              echo "Git diff after updating image tag:"
               git diff -- helm-values/workloads/forum-api-business.yaml
 
               git add helm-values/workloads/forum-api-business.yaml
@@ -119,3 +121,5 @@ environment {
         }
       }
     }
+  }
+}
