@@ -1,0 +1,45 @@
+version: v1
+
+services:
+  - name: forum-api
+    displayName: Forum API
+    owner: worryyy
+
+    environments:
+      - name: dev
+        namespace: app
+
+        branchPolicy:
+          defaultBranch: main
+          allowedBranches:
+            - main
+            - develop
+            - feature/*
+
+        git:
+          repo: https://github.com/worryyy/k3s-platform.git
+          chartPath: charts/forum-api
+          valuesFile: helm-values/workloads/forum-api-business.yaml
+
+        image:
+          repository: ccr.ccs.tencentyun.com/k3s-platform/server
+          tagPolicy: git-sha
+          requireDigest: false
+
+        jenkins:
+          mode: legacy
+          jobName: forum-api-pipeline
+
+        argocd:
+          application: forum-api
+          namespace: argocd
+
+        kubernetes:
+          namespace: app
+          deployment: forum-api
+          service: forum-api
+          container: forum-api
+
+        health:
+          healthPath: /healthz
+          readyPath: /readyz
