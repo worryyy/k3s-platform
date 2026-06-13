@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/config"
+	"github.com/worryyy/devops-platform/platform/server/internal/config"
 )
 
 func main() {

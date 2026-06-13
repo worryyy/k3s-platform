@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/worryyy/k3s-platform/platform/server/internal/release"
+	"github.com/worryyy/devops-platform/platform/server/internal/release"
 )
 
 type RouterDependencies struct {

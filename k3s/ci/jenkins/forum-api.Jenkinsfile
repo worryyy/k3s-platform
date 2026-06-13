@@ -46,7 +46,7 @@ spec:
 
   environment {
     IMAGE_REPO = "ccr.ccs.tencentyun.com/k3s-platform/server"
-    GIT_PUSH_REPO = "https://github.com/worryyy/k3s-platform.git"
+    GIT_PUSH_REPO = "https://github.com/worryyy/devops-platform.git"
     GOPROXY = "https://goproxy.cn,direct"
     GO111MODULE = "on"
   }

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/worryyy/k3s-platform/platform/server/internal/pkg/responses"
-	"github.com/worryyy/k3s-platform/platform/server/internal/release"
+	"github.com/worryyy/devops-platform/platform/server/internal/pkg/responses"
+	"github.com/worryyy/devops-platform/platform/server/internal/release"
 )
 
 type ReleaseHandler struct {

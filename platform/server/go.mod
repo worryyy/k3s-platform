@@ -1,4 +1,4 @@
-module github.com/worryyy/k3s-platform/platform/server
+module github.com/worryyy/devops-platform/platform/server
 
 go 1.26.0
 

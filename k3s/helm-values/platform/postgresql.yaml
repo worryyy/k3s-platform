@@ -1,0 +1,23 @@
+auth:
+  username: platform_user
+  database: platform_db
+  existingSecret: platform-postgresql-auth
+
+primary:
+  nodeSelector:
+    platform-role: light
+
+  persistence:
+    enabled: true
+    size: 5Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+metrics:
+  enabled: false

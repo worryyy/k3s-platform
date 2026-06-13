@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/release"
+	"github.com/worryyy/devops-platform/platform/server/internal/release"
 )
 
 func (s *Store) AddEvent(ctx context.Context, releaseID string, status release.Status, message string, detail map[string]interface{}) error {

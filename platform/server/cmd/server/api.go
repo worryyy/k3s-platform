@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/api"
-	"github.com/worryyy/k3s-platform/platform/server/internal/catalog"
-	"github.com/worryyy/k3s-platform/platform/server/internal/config"
-	"github.com/worryyy/k3s-platform/platform/server/internal/queue"
-	"github.com/worryyy/k3s-platform/platform/server/internal/release"
-	"github.com/worryyy/k3s-platform/platform/server/internal/store"
+	"github.com/worryyy/devops-platform/platform/server/internal/api"
+	"github.com/worryyy/devops-platform/platform/server/internal/catalog"
+	"github.com/worryyy/devops-platform/platform/server/internal/config"
+	"github.com/worryyy/devops-platform/platform/server/internal/queue"
+	"github.com/worryyy/devops-platform/platform/server/internal/release"
+	"github.com/worryyy/devops-platform/platform/server/internal/store"
 )
 
 func runAPI(ctx context.Context, cfg config.Config, logger *slog.Logger) error {

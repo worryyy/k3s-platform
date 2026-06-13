@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/catalog"
-	"github.com/worryyy/k3s-platform/platform/server/internal/integrations/argocd"
-	k8s "github.com/worryyy/k3s-platform/platform/server/internal/integrations/kubernetes"
-	"github.com/worryyy/k3s-platform/platform/server/internal/queue"
+	"github.com/worryyy/devops-platform/platform/server/internal/catalog"
+	"github.com/worryyy/devops-platform/platform/server/internal/integrations/argocd"
+	k8s "github.com/worryyy/devops-platform/platform/server/internal/integrations/kubernetes"
+	"github.com/worryyy/devops-platform/platform/server/internal/queue"
 )
 
 type WorkerConfig struct {

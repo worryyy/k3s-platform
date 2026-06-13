@@ -7,9 +7,9 @@ spec:
   project: workloads
 
   source:
-    repoURL: https://github.com/worryyy/k3s-platform.git
+    repoURL: https://github.com/worryyy/devops-platform.git
     targetRevision: main
-    path: charts/forum-api
+    path: k3s/charts/forum-api
     helm:
       releaseName: forum-api
       valueFiles:

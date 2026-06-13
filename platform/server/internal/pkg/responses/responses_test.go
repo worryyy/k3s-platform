@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/worryyy/k3s-platform/platform/server/internal/pkg/bizerr"
+	"github.com/worryyy/devops-platform/platform/server/internal/pkg/bizerr"
 )
 
 func TestSuccessRespData(t *testing.T) {

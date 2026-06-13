@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/pkg/platformerr"
+	"github.com/worryyy/devops-platform/platform/server/internal/pkg/platformerr"
 	"gorm.io/gorm"
 )
 

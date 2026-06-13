@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/worryyy/k3s-platform/platform/server/internal/catalog"
-	"github.com/worryyy/k3s-platform/platform/server/internal/pkg/bizerr"
-	"github.com/worryyy/k3s-platform/platform/server/internal/pkg/platformerr"
-	"github.com/worryyy/k3s-platform/platform/server/internal/queue"
+	"github.com/worryyy/devops-platform/platform/server/internal/catalog"
+	"github.com/worryyy/devops-platform/platform/server/internal/pkg/bizerr"
+	"github.com/worryyy/devops-platform/platform/server/internal/pkg/platformerr"
+	"github.com/worryyy/devops-platform/platform/server/internal/queue"
 )
 
 type fakeStore struct {
@@ -167,9 +167,9 @@ func TestServiceCreateSuccess(t *testing.T) {
 							AllowedBranches: []string{"main", "develop", "feature/*"},
 						},
 						Git: catalog.GitConfig{
-							Repo:       "https://github.com/worryyy/k3s-platform.git",
-							ChartPath:  "charts/forum-api",
-							ValuesFile: "helm-values/workloads/forum-api-business.yaml",
+							Repo:       "https://github.com/worryyy/forum-app.git",
+							ChartPath:  "k3s/charts/forum-api",
+							ValuesFile: "k3s/helm-values/workloads/forum-api-business.yaml",
 						},
 						Image: catalog.ImageConfig{
 							Repository: "repo",
